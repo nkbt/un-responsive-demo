@@ -11,8 +11,13 @@ const Responsive = React.createClass({
 
   getInitialState() {
     return {
-      isOpened: false
+      isOpened: !this.props.isSmall
     }
+  },
+
+
+  componentWillReceiveProps({isSmall}) {
+    this.setState({isOpened: !isSmall})
   },
 
 
