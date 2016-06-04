@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {Motion, spring} from 'react-motion';
 
 
 const Responsive = React.createClass({
@@ -34,13 +35,17 @@ const Responsive = React.createClass({
     return (
       <div className="intro">
         <button onClick={this.onToggle}>{isOpened ? 'Close' : 'Open'}</button>
-        <div style={{width: isOpened ? width : 0}} className="responsive">
-          <div className="content">
-            Should be<br />
-            <b>hidden on small</b><br />
-            screens
-          </div>
-        </div>
+        <Motion style={{width: spring(isOpened ? width : 0)}}>
+          {style => (
+            <div style={style} className="responsive">
+              <div className="content">
+                Should be<br />
+                <b>hidden on small</b><br />
+                screens
+              </div>
+            </div>
+          )}
+        </Motion>
         <p>Window width <b>{width}</b></p>
         <p>Small screen <b>{JSON.stringify(isSmall)}</b></p>
       </div>
