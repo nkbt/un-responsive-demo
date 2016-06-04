@@ -16,7 +16,7 @@ import {subscribe as windowSize, getSize} from './lib/windowSize';
 import {WINDOW_SIZE_CHANGE} from './lib/windowSize/reducer';
 
 const AppWrap = React.createClass({
-  componentWillMount() {
+  componentDidMount() {
     store.dispatch({type: WINDOW_SIZE_CHANGE, ...getSize()});
     this.unsubscribeWindowsSize = windowSize({store});
   },
