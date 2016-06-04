@@ -6,6 +6,8 @@ const Empty = React.createClass({
     return (
       <div className="empty">
         Hello, World!
+        <br />
+        <a href="/frame">Show me something</a>
       </div>
     );
   }
