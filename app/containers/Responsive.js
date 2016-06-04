@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 
 const Responsive = React.createClass({
   propTypes: {
+    isInitial: React.PropTypes.bool.isRequired,
     width: React.PropTypes.number.isRequired,
     isSmall: React.PropTypes.bool.isRequired
   },
@@ -11,7 +12,7 @@ const Responsive = React.createClass({
 
   getInitialState() {
     return {
-      isOpened: !this.props.isSmall
+      isOpened: this.props.isInitial ? false : !this.props.isSmall
     }
   },
 
@@ -48,7 +49,8 @@ const Responsive = React.createClass({
 });
 
 
-const mapStateToProps = ({windowSize: {width, isSmall}}) => ({
+const mapStateToProps = ({windowSize: {isInitial, width, isSmall}}) => ({
+  isInitial,
   width,
   isSmall
 });
