@@ -1,11 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Motion, spring} from 'react-motion';
+import {Motion} from 'react-motion';
+import {responsive} from '../lib/responsive';
 
 
 const Responsive = React.createClass({
   propTypes: {
-    isInitial: React.PropTypes.bool.isRequired,
+    spring: React.PropTypes.func.isRequired,
     width: React.PropTypes.number.isRequired,
     isSmall: React.PropTypes.bool.isRequired
   },
@@ -13,7 +14,7 @@ const Responsive = React.createClass({
 
   getInitialState() {
     return {
-      isOpened: this.props.isInitial ? false : !this.props.isSmall
+      isOpened: false
     }
   },
 
@@ -29,7 +30,7 @@ const Responsive = React.createClass({
 
 
   render() {
-    const {width, isSmall} = this.props;
+    const {width, isSmall, spring} = this.props;
     const {isOpened} = this.state;
 
     return (
@@ -54,10 +55,9 @@ const Responsive = React.createClass({
 });
 
 
-const mapStateToProps = ({windowSize: {isInitial, width, isSmall}}) => ({
-  isInitial,
+const mapWindowSizeToProps = ({width, isSmall}) => ({
   width,
   isSmall
 });
 
-export default connect(mapStateToProps)(Responsive);
+export default responsive(mapWindowSizeToProps)(Responsive);
