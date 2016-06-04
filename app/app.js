@@ -12,8 +12,26 @@ import {Provider} from 'react-redux'
 const store = configureStore(JSON.parse(unescape(window.__REDUX_STATE__)));
 
 
-ReactDOM.render((
-  <Provider store={store}>
-    { createRoutes(browserHistory) }
-  </Provider>
-), document.getElementById('root'))
+import {subscribe as windowSize, getSize} from './lib/windowSize';
+import {WINDOW_SIZE_CHANGE} from './lib/windowSize/reducer';
+
+const AppWrap = React.createClass({
+  componentWillMount() {
+    store.dispatch({type: WINDOW_SIZE_CHANGE, ...getSize()});
+    this.unsubscribeWindowsSize = windowSize({store});
+  },
+
+  componentWillUnmount() {
+    this.unsubscribeWindowsSize();
+  },
+
+  render() {
+    return (
+      <Provider store={store}>
+        { createRoutes(browserHistory) }
+      </Provider>
+    );
+  }
+});
+
+ReactDOM.render(<AppWrap />, document.getElementById('root'));

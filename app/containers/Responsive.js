@@ -1,7 +1,14 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
 
 const Responsive = React.createClass({
+  propTypes: {
+    width: React.PropTypes.number.isRequired,
+    isSmall: React.PropTypes.bool.isRequired
+  },
+
+
   getInitialState() {
     return {
       isOpened: false
@@ -15,24 +22,30 @@ const Responsive = React.createClass({
 
 
   render() {
+    const {width, isSmall} = this.props;
     const {isOpened} = this.state;
 
     return (
       <div className="intro">
         <button onClick={this.onToggle}>{isOpened ? 'Close' : 'Open'}</button>
-        <div style={{width: isOpened ? '100%' : 0}} className="responsive">
+        <div style={{width: isOpened ? width : 0}} className="responsive">
           <div className="content">
             Should be<br />
             <b>hidden on small</b><br />
             screens
           </div>
         </div>
-        <p>Window width <b>¯\_(ツ)_/¯</b></p>
-        <p>Small screen <b>¯\_(ツ)_/¯</b></p>
+        <p>Window width <b>{width}</b></p>
+        <p>Small screen <b>{JSON.stringify(isSmall)}</b></p>
       </div>
     );
   }
 });
 
 
-export default Responsive;
+const mapStateToProps = ({windowSize: {width, isSmall}}) => ({
+  width,
+  isSmall
+});
+
+export default connect(mapStateToProps)(Responsive);
